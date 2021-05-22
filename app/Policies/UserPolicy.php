@@ -15,9 +15,9 @@ class UserPolicy
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function viewAny(User $user)
+    public function viewAny(User $user) // == Controller index
     {
-        return $user->checkRole('user');
+        return true;
     }
 
     /**
@@ -27,7 +27,7 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return mixed
      */
-    public function view(User $user, User $model)
+    public function view(User $user, User $model) // == Controller show
     {
         return $user->checkRole('user');
     }
@@ -38,7 +38,7 @@ class UserPolicy
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function create(User $user)
+    public function create(User $user) // Controller create(), store()
     {
         return false;
     }
@@ -50,7 +50,7 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return mixed
      */
-    public function update(User $user, User $model)
+    public function update(User $user, User $model) // Controller edit(),update()
     {
         return $user->id === $model->id;
     }
@@ -62,7 +62,7 @@ class UserPolicy
      * @param  \App\Models\User  $model
      * @return mixed
      */
-    public function delete(User $user, User $model)
+    public function delete(User $user, User $model) // Controller Destroy
     {
         return false;
     }

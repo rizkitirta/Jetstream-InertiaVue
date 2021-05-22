@@ -7,7 +7,7 @@
           class="float-right leading-tight"
           :href="route('users.create')"
         >
-          <jet-button class="float-right" :href="route('users.create')" v-if="$page.props.permission.users.viewAny">Create</jet-button>
+          <jet-button class="float-right" :href="route('users.create')" v-if="$page.props.permission.users.create">Create</jet-button>
         </inertia-link>
       </h2>
     </template>
@@ -93,7 +93,7 @@
                         <inertia-link
                           :href="route('users.edit', user.id)"
                           class="ml-2 text-indigo-600 hover:text-indigo-900"
-                          v-if="user.can.update"
+                          v-if="user.can.view"
                           >Edit</inertia-link
                         >
                       </td>
