@@ -2,10 +2,11 @@
 
 namespace App\Policies;
 
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class UserPolicy
+class PostPolicy
 {
     use HandlesAuthorization;
 
@@ -15,7 +16,7 @@ class UserPolicy
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function viewAny(User $user) // == Controller index
+    public function viewAny(User $user)
     {
         if($user->hasRole('user')) {
             return true;
@@ -26,10 +27,10 @@ class UserPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Post  $post
      * @return mixed
      */
-    public function view(User $user, User $model) // == Controller show
+    public function view(User $user, Post $post)
     {
         if($user->hasRole('user')) {
             return true;
@@ -42,45 +43,47 @@ class UserPolicy
      * @param  \App\Models\User  $user
      * @return mixed
      */
-    public function create(User $user) // Controller create(), store()
+    public function create(User $user)
     {
-        return false;
+        if($user->hasRole('user')) {
+            return true;
+        }
     }
 
     /**
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Post  $post
      * @return mixed
      */
-    public function update(User $user, User $model) // Controller edit(),update()
+    public function update(User $user, Post $post)
     {
-       if ($user->hasRole('user') && $user->id === $model->id) {
-           return true;
-       }
+        if ($user->hasRole('user') && $user->id === $post->id) {
+            return true;
+        }
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Post  $post
      * @return mixed
      */
-    public function delete(User $user, User $model) // Controller Destroy
+    public function delete(User $user, Post $post)
     {
-        return false;
+        //
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Post  $post
      * @return mixed
      */
-    public function restore(User $user, User $model)
+    public function restore(User $user, Post $post)
     {
         //
     }
@@ -89,10 +92,10 @@ class UserPolicy
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\User  $model
+     * @param  \App\Models\Post  $post
      * @return mixed
      */
-    public function forceDelete(User $user, User $model)
+    public function forceDelete(User $user, Post $post)
     {
         //
     }
