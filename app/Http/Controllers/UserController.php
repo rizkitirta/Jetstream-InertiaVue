@@ -8,6 +8,11 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(User::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -71,7 +76,14 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+        ]);
+
+        $user->update($request->only('name','email'));
+
+        return back();
     }
 
     /**
@@ -85,3 +97,5 @@ class UserController extends Controller
         //
     }
 }
+
+//56 menit

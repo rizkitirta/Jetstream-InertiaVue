@@ -7,7 +7,7 @@
           class="float-right leading-tight"
           :href="route('users.create')"
         >
-          <jet-button>Create</jet-button>
+          <jet-button class="float-right" :href="route('users.create')" v-if="$page.props.permission.users.viewAny">Create</jet-button>
         </inertia-link>
       </h2>
     </template>
@@ -52,13 +52,13 @@
                     <tr v-for="user in users" :key="user.id">
                       <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
-                          <div class="flex-shrink-0 h-10 w-10">
+                          <!-- <div class="flex-shrink-0 h-10 w-10">
                             <img
                               class="h-10 w-10 rounded-full"
                               :src="user.profile_photo_url"
                               alt=""
                             />
-                          </div>
+                          </div> -->
                           <div class="ml-4">
                             <div class="text-sm font-medium text-gray-900">
                               {{ user.name }}
@@ -87,11 +87,13 @@
                         <inertia-link
                           :href="route('users.show', user.id)"
                           class="text-indigo-600 hover:text-indigo-900"
+                          v-if="user.can.view"
                           >Show</inertia-link
                         >
                         <inertia-link
                           :href="route('users.edit', user.id)"
                           class="ml-2 text-indigo-600 hover:text-indigo-900"
+                          v-if="user.can.update"
                           >Edit</inertia-link
                         >
                       </td>
